@@ -1,0 +1,81 @@
+# Nametags Configuration
+# Configure player nametags (prefix, suffix, visibility, collision)
+
+# Global nametag settings (default for all players)
+global:
+  prefix: "&7"
+  suffix: ""
+  # Visibility: ALWAYS, NEVER, HIDE_FOR_OTHER_TEAMS, HIDE_FOR_OWN_TEAM
+  visibility: ALWAYS
+  # Collision: ALWAYS, NEVER, PUSH_OWN_TEAM, PUSH_OTHER_TEAMS
+  collision-rule: ALWAYS
+  # Hide nametag completely
+  invisible: false
+
+# Per-group nametag configurations
+groups:
+  owner:
+    prefix: "&4&l[OWNER] &4"
+    suffix: ""
+    priority: 100
+  
+  admin:
+    prefix: "&c[Admin] &c"
+    suffix: ""
+    priority: 90
+  
+  mod:
+    prefix: "&9[Mod] &9"
+    suffix: ""
+    priority: 80
+  
+  helper:
+    prefix: "&3[Helper] &3"
+    suffix: ""
+    priority: 70
+  
+  vip:
+    prefix: "&6[VIP] &6"
+    suffix: ""
+    priority: 50
+  
+  default:
+    prefix: "&7"
+    suffix: ""
+    priority: 1
+
+# Per-world nametag configurations
+worlds:
+  pvp:
+    suffix: " &c⚔"
+    priority: 5
+  
+  creative:
+    prefix: "&e[Builder] &e"
+    priority: 5
+
+# Per-player nametag configurations (UUID-based)
+players:
+  00000000-0000-0000-0000-000000000000:
+    prefix: "&d[Special] &d"
+    suffix: " &5✦"
+    priority: 95
+
+# Conditional nametags
+conditions:
+  - condition: "%player_health% < 5"
+    suffix: " &c❤"
+    priority: 15
+  
+  - condition: "%player_world% == warzone"
+    prefix: "&c[Combat] &c"
+    priority: 10
+
+# Anti-override protection
+anti-override:
+  enabled: true
+
+# Client bug fixes
+client-bug-fixes:
+  # Fix invisible nametags on 1.8.x clients
+  fix-1-8-invisible-nametags: true

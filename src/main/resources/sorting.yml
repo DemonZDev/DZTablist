@@ -1,0 +1,51 @@
+# Sorting Configuration
+# Define how players are sorted in the tablist
+
+# Sorting rules (applied in order of priority)
+rules:
+  # Rule 1: Sort by LuckPerms group
+  - type: GROUP
+    priority: 1
+    groups:
+      owner: 100
+      admin: 90
+      mod: 80
+      helper: 70
+      vip: 50
+      default: 1
+  
+  # Rule 2: Sort by custom permission weight
+  - type: PERMISSION
+    priority: 2
+    permission-prefix: "tablist.weight."
+    order: DESCENDING
+  
+  # Rule 3: Sort by numeric placeholder (e.g., player level)
+  - type: PLACEHOLDER_NUMERIC
+    priority: 3
+    placeholder: "%player_level%"
+    order: DESCENDING
+  
+  # Rule 4: Sort alphabetically by name
+  - type: PLACEHOLDER_ALPHABETIC
+    priority: 4
+    placeholder: "%player_name%"
+    order: ASCENDING
+    case-sensitive: false
+  
+  # Rule 5: Custom predefined order
+  - type: CUSTOM
+    priority: 5
+    placeholder: "%player_gamemode%"
+    order:
+      - SURVIVAL
+      - CREATIVE
+      - ADVENTURE
+      - SPECTATOR
+
+# Update triggers
+update-on:
+  permission-change: true
+  group-change: true
+  world-change: true
+  placeholder-change: true

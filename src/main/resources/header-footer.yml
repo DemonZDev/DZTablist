@@ -1,0 +1,86 @@
+# Header and Footer Configuration
+# Supports MiniMessage formatting, PlaceholderAPI, animations
+
+# Global header/footer (applied to all players by default)
+global:
+  header:
+    - "<gradient:#FF0000:#00FF00>Welcome to the Server</gradient>"
+    - ""
+    - "<rainbow>Player: %player_name%</rainbow>"
+  footer:
+    - ""
+    - "<gray>Players Online: <white>%server_online%/%server_max_players%"
+    - "<gray>Your Ping: <white>%player_ping%ms"
+    - ""
+    - "<gradient:#FFD700:#FFA500>discord.gg/example</gradient>"
+  refresh: 1000
+
+# Per-world configurations
+worlds:
+  world:
+    header:
+      - "<green><bold>Survival World</bold></green>"
+      - "<gray>Good luck surviving!"
+    footer:
+      - "<yellow>Use /spawn to return"
+    priority: 5
+  
+  world_nether:
+    header:
+      - "<red><bold>The Nether</bold></red>"
+      - "<dark_red>Danger ahead!</dark_red>"
+    priority: 5
+  
+  lobby:
+    header:
+      - "<aqua><bold>Server Lobby</bold></aqua>"
+      - "<gray>Select a game to play"
+    footer:
+      - "<green>Right-click compass to choose"
+    priority: 5
+
+# Per-group configurations (LuckPerms integration)
+groups:
+  admin:
+    header:
+      - "<rainbow><bold>ADMIN PANEL</bold></rainbow>"
+      - "<red>You have special permissions"
+    footer:
+      - "<gold>Use your powers wisely"
+    priority: 10
+  
+  vip:
+    header:
+      - "<gold><bold>VIP Member</bold></gold>"
+      - "<yellow>Thanks for supporting us!"
+    priority: 8
+  
+  mod:
+    header:
+      - "<blue><bold>Moderator Panel</bold></blue>"
+    priority: 9
+
+# Per-player configurations (UUID-based)
+# Example: Replace 'example-uuid' with actual player UUID
+players:
+  00000000-0000-0000-0000-000000000000:
+    header:
+      - "<light_purple>Custom Header for You!</light_purple>"
+    footer:
+      - "<light_purple>You're special!</light_purple>"
+    priority: 20
+
+# Conditional headers/footers
+conditions:
+  - condition: "%player_world% == spawn"
+    header:
+      - "<aqua>Spawn Area</aqua>"
+      - "<gray>Welcome!"
+    footer:
+      - "<green>Enjoy your stay"
+    priority: 15
+  
+  - condition: "%player_gamemode% == CREATIVE"
+    header:
+      - "<light_purple>Creative Mode Active</light_purple>"
+    priority: 12

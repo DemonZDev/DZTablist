@@ -1,0 +1,63 @@
+# Placeholders Configuration
+# Define custom placeholders and animations
+
+# Custom placeholders
+placeholders:
+  server-name:
+    value: "My Awesome Server"
+    refresh: 0
+  
+  custom-welcome:
+    value: "Welcome %player_name% to the server!"
+    refresh: 1000
+  
+  player-status:
+    value: "%player_name% is %player_gamemode%"
+    refresh: 500
+
+# Animations
+animations:
+  loading:
+    frames:
+      - "Loading."
+      - "Loading.."
+      - "Loading..."
+    interval: 500
+  
+  rainbow-welcome:
+    frames:
+      - "<red>Welcome!"
+      - "<gold>Welcome!"
+      - "<yellow>Welcome!"
+      - "<green>Welcome!"
+      - "<aqua>Welcome!"
+      - "<blue>Welcome!"
+      - "<light_purple>Welcome!"
+    interval: 200
+  
+  server-name-cycle:
+    frames:
+      - "<gradient:#FF0000:#FF7F00>Server Name</gradient>"
+      - "<gradient:#FF7F00:#FFFF00>Server Name</gradient>"
+      - "<gradient:#FFFF00:#00FF00>Server Name</gradient>"
+      - "<gradient:#00FF00:#0000FF>Server Name</gradient>"
+      - "<gradient:#0000FF:#8B00FF>Server Name</gradient>"
+      - "<gradient:#8B00FF:#FF0000>Server Name</gradient>"
+    interval: 300
+
+# Relational placeholders (viewer and target)
+relational:
+  friend-status:
+    identifier: "%rel_friend_status%"
+    value: "Friend"
+    refresh: 2000
+  
+  distance:
+    identifier: "%rel_distance%"
+    value: "%distance% blocks"
+    refresh: 1000
+
+# Usage in configs:
+# - Use %animation_loading% for animations
+# - Use %placeholder_server-name% for custom placeholders
+# - Use %rel_friend-status_<target>% for relational placeholders

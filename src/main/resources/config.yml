@@ -1,0 +1,91 @@
+# DZTablist Configuration
+# Advanced Tablist plugin with extensive customization
+
+# Database settings
+database:
+  # Storage type: YAML, MYSQL, SQLITE
+  type: YAML
+  mysql:
+    host: localhost
+    port: 3306
+    database: dztablist
+    username: root
+    password: password
+    pool-size: 10
+  sqlite:
+    file: data.db
+
+# Performance settings
+performance:
+  # Enable asynchronous processing (recommended)
+  async-processing: true
+  
+  # Refresh intervals in milliseconds
+  refresh-intervals:
+    header-footer: 1000
+    nametags: 500
+    scoreboard: 1000
+    bossbar: 500
+    tablist-format: 500
+    playerlist-objective: 1000
+    belowname: 1000
+  
+  # Cache time-to-live in milliseconds
+  cache-ttl: 5000
+  
+  # Enable or disable features
+  feature-toggles:
+    header-footer: true
+    nametags: true
+    scoreboard: true
+    bossbar: true
+    tablist-format: true
+    layout: false
+    per-world-playerlist: false
+    global-playerlist: false
+    playerlist-objective: true
+    belowname: true
+
+# Logging settings
+logging:
+  # Error log file
+  file: errors.log
+  # Reduce console spam
+  console-spam-reduction: true
+  # Debug mode
+  debug-mode: false
+
+# Placeholder settings
+placeholders:
+  # PlaceholderAPI support
+  papi-support: true
+  # Relational placeholder support
+  relational-support: true
+  # Default refresh interval
+  refresh-interval: 1000
+
+# Anti-override protection
+anti-override:
+  enabled: true
+  # LOWEST, LOW, NORMAL, HIGH, HIGHEST
+  priority: HIGHEST
+
+# Update Checker - Automatic update detection from GitHub
+update-checker:
+  # Enable automatic update checking
+  enabled: true
+  
+  # Check for updates when server starts
+  check-on-startup: true
+  
+  # Runtime check interval (seconds) - checks for updates while server is running
+  runtime-check-interval: 3600
+  
+  # Notify console when update is available
+  notify-console: true
+  
+  # Notify online admins when update is available
+  notify-admins: true
+  
+  # Notify admins on join if update is available
+  notify-on-join: true

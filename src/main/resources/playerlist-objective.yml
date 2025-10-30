@@ -1,0 +1,48 @@
+# Playerlist Objective Configuration
+# Configure the right-side display in tablist (pressing TAB)
+
+# Enable or disable the objective
+enabled: true
+
+# Display type: HEARTS, NUMBER, TEXT
+# HEARTS - Display hearts (health)
+# NUMBER - Display numeric value
+# TEXT - Display text (1.20.3+ only)
+type: HEARTS
+
+# Placeholder for the value
+placeholder: "%player_health%"
+
+# Text to display (for TEXT type on 1.20.3+)
+text: "HP"
+
+# Title of the objective (shows above the list)
+title: "&c❤"
+
+# Refresh interval in milliseconds
+refresh: 1000
+
+# Conditional display
+conditions:
+  # Only show in certain worlds
+  - "%player_world% != lobby"
+  - "%player_world% != spawn"
+
+# Per-world configurations
+worlds:
+  pvp:
+    type: NUMBER
+    placeholder: "%statistic_player_kills%"
+    title: "&cKills"
+  
+  survival:
+    type: HEARTS
+    placeholder: "%player_health%"
+    title: "&c❤"
+
+# Per-group configurations
+groups:
+  admin:
+    type: TEXT
+    text: "ADMIN"
+    title: "&cRank"

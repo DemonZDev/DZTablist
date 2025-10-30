@@ -1,0 +1,99 @@
+# Scoreboard Configuration
+# Configure sidebar scoreboards with animations and conditions
+
+# Scoreboard definitions
+scoreboards:
+  default:
+    # Title with MiniMessage support
+    title: "<gradient:#FF0000:#00FF00><bold>Server Name</bold></gradient>"
+    # Lines (max 15 for <1.13, max 30 for 1.13+)
+    lines:
+      - ""
+      - "&7Player: &f%player_name%"
+      - "&7Rank: &f%vault_rank%"
+      - "&7Ping: &f%player_ping%ms"
+      - ""
+      - "&7Online: &f%server_online%"
+      - "&7World: &f%player_world%"
+      - ""
+      - "&eWebsite:"
+      - "&6example.com"
+      - ""
+    # Refresh interval in milliseconds
+    refresh: 1000
+    # Show line numbers (1-15)
+    show-numbers: false
+    # Custom number to display (if show-numbers is true)
+    custom-number: 0
+    # Right-side text (1.20.3+ only)
+    right-side-text:
+      - "HP: %player_health%"
+      - "Lvl: %player_level%"
+  
+  survival:
+    title: "<green><bold>Survival Stats</bold></green>"
+    lines:
+      - ""
+      - "&7Deaths: &f%statistic_deaths%"
+      - "&7Kills: &f%statistic_player_kills%"
+      - "&7Playtime: &f%statistic_play_one_minute%"
+      - ""
+      - "&7Coordinates:"
+      - "&fX: %player_x%"
+      - "&fY: %player_y%"
+      - "&fZ: %player_z%"
+      - ""
+    refresh: 1000
+    show-numbers: false
+  
+  pvp:
+    title: "<red><bold>PvP Arena</bold></red>"
+    lines:
+      - ""
+      - "&cKills: &f%statistic_player_kills%"
+      - "&cDeaths: &f%statistic_deaths%"
+      - "&cK/D: &f%kd_ratio%"
+      - ""
+      - "&7Current Streak: &f%kill_streak%"
+      - "&7Best Streak: &f%best_streak%"
+      - ""
+    refresh: 500
+    show-numbers: false
+
+# Per-world scoreboard assignments
+worlds:
+  world:
+    scoreboard: survival
+  world_nether:
+    scoreboard: survival
+  world_the_end:
+    scoreboard: survival
+  pvp:
+    scoreboard: pvp
+
+# Conditional scoreboards (checked in priority order)
+conditions:
+  - condition: "%player_world% == pvp"
+    scoreboard: pvp
+    priority: 10
+  
+  - condition: "%vault_rank% == admin"
+    scoreboard: default
+    priority: 5
+
+# Toggle settings
+toggle:
+  command: "/scoreboard toggle"
+  permission: "dztablist.scoreboard.toggle"
+  messages:
+    enabled: "&aScoreboard enabled!"
+    disabled: "&cScoreboard disabled!"
+  # Remember player choice across restarts
+  remember-choice: true
+
+# Auto-detection of other scoreboards
+auto-detection:
+  # Automatically hide when other plugins show scoreboards
+  other-plugins: true
+  # Priority: LOWEST, LOW, NORMAL, HIGH, HIGHEST
+  priority: LOW

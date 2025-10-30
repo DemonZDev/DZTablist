@@ -1,0 +1,104 @@
+# Layout Configuration
+# Customize the entire 80-slot tablist layout (4 columns x 20 rows)
+
+# Enable or disable custom layouts
+enabled: false
+
+# Layout definitions
+layouts:
+  lobby:
+    # Conditions for this layout to be active
+    conditions:
+      - "%player_world% == lobby"
+    
+    # Slot configuration (0-79)
+    # Each column has 20 slots: Column 1 (0-19), Column 2 (20-39), Column 3 (40-59), Column 4 (60-79)
+    slots:
+      # Header row
+      0:
+        type: STATIC
+        text: "&c&lServer Info"
+        skin-uuid: "069a79f4-44e9-4726-a5be-fca90e38aaf5"
+      
+      20:
+        type: STATIC
+        text: "&6&lAdmins Online"
+        skin-uuid: "069a79f4-44e9-4726-a5be-fca90e38aaf5"
+      
+      40:
+        type: STATIC
+        text: "&9&lModerators"
+        skin-uuid: "069a79f4-44e9-4726-a5be-fca90e38aaf5"
+      
+      60:
+        type: STATIC
+        text: "&a&lPlayers"
+        skin-uuid: "069a79f4-44e9-4726-a5be-fca90e38aaf5"
+      
+      # Info section
+      1:
+        type: STATIC
+        text: "&7Online: &f%server_online%"
+      
+      2:
+        type: STATIC
+        text: "&7TPS: &f%server_tps%"
+      
+      3:
+        type: STATIC
+        text: ""
+      
+      4:
+        type: STATIC
+        text: "&eWebsite:"
+      
+      5:
+        type: STATIC
+        text: "&6example.com"
+      
+      # Admin player slots (21-38)
+      21-38:
+        type: PLAYER_GROUP
+        conditions:
+          - "%vault_rank% == admin"
+          - "%vault_rank% == owner"
+        sorting: PRIORITY
+      
+      # Moderator player slots (41-58)
+      41-58:
+        type: PLAYER_GROUP
+        conditions:
+          - "%vault_rank% == mod"
+          - "%vault_rank% == helper"
+        sorting: ALPHABETIC
+      
+      # Regular player slots (61-79)
+      61-79:
+        type: PLAYER_GROUP
+        conditions: []
+        sorting: ALPHABETIC
+  
+  default:
+    conditions: []
+    slots:
+      0-79:
+        type: PLAYER_GROUP
+        conditions: []
+        sorting: PRIORITY
+
+# Per-world layout assignments
+worlds:
+  lobby:
+    layout: lobby
+  hub:
+    layout: lobby
+
+# Conditional layouts (checked in priority order)
+conditional-layouts:
+  - condition: "%player_world% == lobby"
+    layout: lobby
+    priority: 10
+  
+  - condition: "%vault_rank% == admin"
+    layout: default
+    priority: 5
