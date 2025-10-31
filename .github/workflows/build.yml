@@ -14,23 +14,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Unzip first, so setup-java can find pom.xml for caching
+      - name: Unzip plugin source
+        run: |
+          unzip -o Test.zip -d ./plugin
+          echo "✅ Unzipped Test.zip into ./plugin"
+          ls -R ./plugin
+
       - name: Set up Java 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
+          cache: maven
+          cache-dependency-path: './plugin/pom.xml'
 
       - name: Install latest Maven
         run: |
           sudo apt-get update -y
           sudo apt-get install -y maven
           mvn -v
-
-      - name: Unzip plugin source
-        run: |
-          unzip -o Test.zip -d ./plugin
-          echo "✅ Unzipped Test.zip into ./plugin"
-          ls -R ./plugin
 
       - name: Verify pom.xml
         run: |
@@ -40,6 +43,7 @@ jobs:
           fi
 
       - name: Build with Maven
+        id: build
         working-directory: ./plugin
         run: |
           echo "🚀 Starting Maven build..."
@@ -53,9 +57,16 @@ jobs:
             exit $BUILD_STATUS
           fi
 
-      - name: Upload built jar (if successful)
+      - name: Upload built jar
         if: success()
         uses: actions/upload-artifact@v4
         with:
           name: built-plugin
           path: ./plugin/target/*.jar
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failed-build-log
+          path: ./plugin/build.log
