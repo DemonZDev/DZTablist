@@ -1,0 +1,45 @@
+name: Build Minecraft Plugin
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: maven
+
+      - name: Install Maven (latest)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y maven
+          mvn -v
+
+      - name: Unzip plugin source
+        run: |
+          unzip Test.zip -d ./plugin
+          echo "Files unzipped to ./plugin"
+
+      - name: Build with Maven
+        working-directory: ./plugin
+        run: |
+          echo "Starting Maven build..."
+          mvn clean package -B
+        continue-on-error: false
+
+      - name: Show build logs on failure
+        if: failure()
+        run: |
+          echo "Build failed. Showing error log..."
+          cat ./plugin/target/*.log || echo "No Maven log file found."
