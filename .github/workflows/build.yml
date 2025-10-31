@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    name: Compile Plugin
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +21,7 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Install Maven (latest)
+      - name: Install latest Maven
         run: |
           sudo apt-get update -y
           sudo apt-get install -y maven
@@ -28,18 +29,34 @@ jobs:
 
       - name: Unzip plugin source
         run: |
-          unzip Test.zip -d ./plugin
-          echo "Files unzipped to ./plugin"
+          unzip -o Test.zip -d ./plugin
+          echo "✅ Unzipped Test.zip into ./plugin"
+          ls -R ./plugin
+
+      - name: Verify pom.xml
+        run: |
+          if [ ! -f "./plugin/pom.xml" ]; then
+            echo "❌ pom.xml not found inside the unzipped directory!"
+            exit 1
+          fi
 
       - name: Build with Maven
         working-directory: ./plugin
         run: |
-          echo "Starting Maven build..."
-          mvn clean package -B
-        continue-on-error: false
+          echo "🚀 Starting Maven build..."
+          mvn -B clean package | tee build.log
+          BUILD_STATUS=${PIPESTATUS[0]}
+          echo "----- Build Log (tail) -----"
+          tail -n 40 build.log
+          echo "----------------------------"
+          if [ $BUILD_STATUS -ne 0 ]; then
+            echo "❌ Build failed!"
+            exit $BUILD_STATUS
+          fi
 
-      - name: Show build logs on failure
-        if: failure()
-        run: |
-          echo "Build failed. Showing error log..."
-          cat ./plugin/target/*.log || echo "No Maven log file found."
+      - name: Upload built jar (if successful)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-plugin
+          path: ./plugin/target/*.jar
